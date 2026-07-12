@@ -11,7 +11,6 @@ import { WhatsappModule } from './whatsapp/whatsapp.module';
 import { AiModule } from './ai/ai.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { SettingsModule } from './settings/settings.module';
-import { LogsModule } from './logs/logs.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { CommonModule } from './common/common.module';
@@ -32,7 +31,6 @@ import { CommonModule } from './common/common.module';
     AiModule,
     AnalyticsModule,
     SettingsModule,
-    LogsModule,
     DashboardModule,
   ],
 })
