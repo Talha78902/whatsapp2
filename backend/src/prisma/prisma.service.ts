@@ -31,30 +31,34 @@ export class PrismaService extends DataStoreService implements OnModuleInit {
   }
 
   async onModuleInit() {
-    const existing = this.findUnique('user', { where: { email: 'admin@talha.com' } as any });
-    if (!existing) {
-      const bcrypt = require('bcryptjs');
-      const hash = bcrypt.hashSync('admin123', 12);
-      this.create('user', {
-        data: {
-          email: 'admin@talha.com',
-          passwordHash: hash,
-          firstName: 'Admin',
-          lastName: 'User',
-          role: 'admin',
-          isActive: true,
-        },
-      } as any);
-    }
+    try {
+      const existing = this.findUnique('user', { where: { email: 'admin@talha.com' } as any });
+      if (!existing) {
+        const bcrypt = require('bcryptjs');
+        const hash = bcrypt.hashSync('admin123', 12);
+        this.create('user', {
+          data: {
+            email: 'admin@talha.com',
+            passwordHash: hash,
+            firstName: 'Admin',
+            lastName: 'User',
+            role: 'admin',
+            isActive: true,
+          },
+        } as any);
+      }
 
-    const settingsCount = this.count('setting');
-    if (settingsCount === 0) {
-      this.create('setting', { data: { key: 'business_name', value: 'Talha Business' } } as any);
-      this.create('setting', { data: { key: 'business_hours', value: 'Mon-Fri 9AM-6PM' } } as any);
-      this.create('setting', { data: { key: 'ai_enabled', value: 'true' } } as any);
-      this.create('setting', { data: { key: 'default_language', value: 'en' } } as any);
-    }
+      const settingsCount = this.count('setting');
+      if (settingsCount === 0) {
+        this.create('setting', { data: { key: 'business_name', value: 'Talha Business' } } as any);
+        this.create('setting', { data: { key: 'business_hours', value: 'Mon-Fri 9AM-6PM' } } as any);
+        this.create('setting', { data: { key: 'ai_enabled', value: 'true' } } as any);
+        this.create('setting', { data: { key: 'default_language', value: 'en' } } as any);
+      }
 
-    console.log('In-memory data store initialized with seed data');
+      console.log('In-memory data store initialized with seed data');
+    } catch (err) {
+      console.error('Seed error:', err);
+    }
   }
 }
