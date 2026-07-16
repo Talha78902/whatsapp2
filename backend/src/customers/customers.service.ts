@@ -117,7 +117,7 @@ export class CustomersService {
   }
 
   async bulkImport(customers: CreateCustomerDto[]) {
-    const results = [];
+    const results: any[] = [];
     for (const customer of customers) {
       const existing = await this.prisma.customer.findFirst({
         where: { phone: customer.phone },
