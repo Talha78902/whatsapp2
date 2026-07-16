@@ -10,6 +10,13 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { LoggerService } from './common/logger.service';
 import { ConfigService } from './common/config.service';
 
+process.on('unhandledRejection', (reason) => {
+  console.error('UNHANDLED REJECTION:', reason);
+});
+process.on('uncaughtException', (err) => {
+  console.error('UNCAUGHT EXCEPTION:', err);
+});
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
