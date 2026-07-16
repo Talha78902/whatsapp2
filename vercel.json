@@ -1,10 +1,11 @@
 {
-  "buildCommand": "cd backend && npm run build && cd ../frontend && npm run build",
+  "buildCommand": "cd backend && npm install && npm run build && cd ../frontend && npm install && npm run build",
   "outputDirectory": "frontend/dist",
   "functions": {
     "api/index.js": {
       "memory": 256,
-      "maxDuration": 10
+      "maxDuration": 10,
+      "includeFiles": "backend/dist/**"
     }
   },
   "routes": [
