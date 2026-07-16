@@ -7,10 +7,9 @@ services:
     rootDir: backend
     buildCommand: npm install && npm run build
     startCommand: node dist/main
-    healthCheckPath: /api/v1/auth/profile
     envVars:
       - key: NODE_VERSION
-        value: 22
+        value: 18
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_REFRESH_SECRET

@@ -60,6 +60,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api/docs', app, document);
 
+  const httpAdapter = app.getHttpAdapter();
+  httpAdapter.get('/health', (_, res) => res.json({ status: 'ok' }));
+  httpAdapter.get('/api/v1/health', (_, res) => res.json({ status: 'ok' }));
+
   const port = configService.port;
   await app.listen(port);
   console.log(`Server running on http://localhost:${port}`);
