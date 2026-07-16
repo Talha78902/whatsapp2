@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: whatsapp-backend
+    runtime: node
+    repo: https://github.com/Talha78902/whatsapp2
+    branch: master
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: node dist/main
+    healthCheckPath: /api/v1/auth/profile
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 15m
+      - key: JWT_REFRESH_EXPIRES_IN
+        value: 7d
