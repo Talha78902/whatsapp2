@@ -17,13 +17,15 @@ process.on('uncaughtException', (err) => {
   console.error('UNCAUGHT EXCEPTION:', err);
 });
 
-async function bootstrap() {
+export async function createApp() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
   const loggerService = app.get(LoggerService);
 
   app.setGlobalPrefix('api/v1');
+
+  app.getHttpAdapter().get('/health', (_, res) => res.json({ status: 'ok' }));
 
   app.use(helmet.default());
   app.use(cookieParser());
@@ -60,10 +62,12 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api/docs', app, document);
 
-  const httpAdapter = app.getHttpAdapter();
-  httpAdapter.get('/health', (_, res) => res.json({ status: 'ok' }));
-  httpAdapter.get('/api/v1/health', (_, res) => res.json({ status: 'ok' }));
+  return app;
+}
 
+async function bootstrap() {
+  const app = await createApp();
+  const configService = app.get(ConfigService);
   const port = configService.port;
   await app.listen(port);
   console.log(`Server running on http://localhost:${port}`);
